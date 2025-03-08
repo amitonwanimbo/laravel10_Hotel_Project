@@ -15,7 +15,7 @@ class StafController extends Controller
      */
     public function index()
     {
-        return view('staf.stafdashboard');
+        return view('Staf.stafdashboard');
     }
 
     /**

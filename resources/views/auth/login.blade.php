@@ -25,7 +25,7 @@
     <div class="mb-4 font-medium text-sm text-green-600">
         {{ session('status') }}
     </div>
-@endif
+   @endif
         <div class="card">
         <div class="login-logo"> <a href="/">
            <img src="{{asset('Admilte/dist/assets/img/elohim.png')}}" alt="Logo" width="350px">

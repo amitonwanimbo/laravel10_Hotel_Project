@@ -19,8 +19,7 @@ class PenggunaController extends Controller
      */
     public function index()
     {
-   
-        $pengguna = User::paginate(5);
+        $pengguna = User::orderBy('created_at', 'desc')->paginate(3);
         return view('admin.Users.index', compact('pengguna')); 
     }
 
@@ -74,9 +73,9 @@ $pengguna = User::create([
      */
     public function show($id)
     {
-        $laporan = Laporan::findOrFail($id);
+        $pengguna = User::findOrFail($id);
 
-        return view('laporan.show', compact('laporan'));
+        return view('admin.Users.show', compact('pengguna'));
     }
 
     /**

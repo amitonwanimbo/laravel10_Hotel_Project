@@ -39,7 +39,7 @@ Route::middleware(['auth'])->group(function ()
         });
         // untuk Auth staf
         Route::middleware(['auth', 'role:staf'])->group(function () {
-            Route::get('/staf', [StafController::class, 'index'])->name('staf.dashboard');
+            Route::get('/staf', [StafController::class, 'index'])->name('Staf.dashboard');
             Route::resource('lapor', LaporanController::class);
         });    
 });
@@ -47,7 +47,7 @@ Route::middleware(['auth'])->group(function ()
 // Untuk Alaman pertama
 
 Route::get('/', function () {
-    return view('auth.login');
+    return view('welcome');
 });
 
 

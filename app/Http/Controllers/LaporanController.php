@@ -11,37 +11,21 @@ use Illuminate\Support\Facades\Storage;
 
 class LaporanController extends Controller
 {
-    
-    //   // Menampilkan daftar laporan untuk karyawan
-    //   public function index()
-    //   {
-    //      $laporans = Laporan::paginate(10);
-    //       $laporans = Laporan::where('user_id', auth()->id())->get();
-    //       return view('Staf.laporans.index', compact('laporans'));
-    //   }
-    public function index()
+        public function index()
     {
         // Mengambil daftar laporan dengan paginasi
-
-        $laporans = Laporan::paginate(10);
+        $laporans = Laporan::orderBy('created_at', 'desc')->paginate(5);
         $laporans = Laporan::where('user_id', auth()->id())->get();
-
         return view('staf.laporans.index', compact('laporans'));
-    }
-
-    public function show($id)
-    {
-        $laporan = Laporan::findOrFail($id);
-
-        return view('staf.laporans.show', compact('laporan'));
-    }
-  
+    }  
       // Menampilkan form pembuatan laporan
       public function create()
       {
-          return view('staf.laporans.create');
+         // Mengambil daftar laporan dengan paginasi
+         $laporans = Laporan::orderBy('created_at', 'desc')->paginate(5);
+         $laporans = Laporan::where('user_id', auth()->id())->get();
+         return view('staf.laporans.index', compact('laporans'));
       }
-  
       // Menyimpan laporan ke database
       public function store(Request $request)
   {
@@ -70,7 +54,7 @@ class LaporanController extends Controller
         'image' => $path,
         'status' => 'menunggu',
     ]);
-      return redirect()->route('lapor.index')->with('success', 'Laporan berhasil dibuat dan menunggu persetujuan.');
+      return redirect()->route('lapor.create')->with('success', 'Laporan berhasil dibuat dan menunggu persetujuan.');
   }
 
   public function updateStatus(Request $request, Laporan $laporan, $status)
@@ -82,18 +66,6 @@ class LaporanController extends Controller
       return redirect()->route('lapor.index')->with('success', 'Status laporan berhasil diperbarui.');
   }
   
-
-  // public function index()
-  // {
-  //     $laporans = Laporan::all();
-  //     return view('laporan.index', compact('laporans'));
-  // }
-
-//   public function show(string $id)
-//   {
-//       $laporan = Laporan::paginate(5);
-//       return view('Staf.laporans.show', compact('laporan')); 
-//   }
   public function laporanPegawai()
   {
       $laporans = Laporan::where('user_id', auth()->id())->get();
@@ -104,11 +76,9 @@ class LaporanController extends Controller
       $pengguna = Laporan::findOrFail($id);
       $pengguna->delete();
 
-      return redirect()->route('lapor.index')->with('success', 'Berhasil Hapus.....');
+      return redirect()->route('lapor.create')->with('success', 'Berhasil Hapus.....');
   
   }
-
-
  // Menampilkan semua laporan untuk admin
  public function adminIndex()
  {
@@ -166,5 +136,10 @@ public function update(Request $request, $id)
    $laporan->save();
 
    return redirect()->route('lapor.index')->with('success', 'Laporan berhasil diperbarui.');
+}
+public function show($id)
+{
+    $laporan = Laporan::findOrFail($id);
+    return view('staf.laporans.show', compact('laporan'));
 }
 }

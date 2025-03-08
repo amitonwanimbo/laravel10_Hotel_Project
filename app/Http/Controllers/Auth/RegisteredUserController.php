@@ -35,27 +35,26 @@ class RegisteredUserController extends Controller
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'role' => ['required', 'string', 'max:255'],
-
 
         ]);
-        $user = User::findOrFail($id);
-        $user->name = $request->name;
-        $user->email = $request->email;
 
-    if ($request->hasFile('image')) {
-        // Hapus gambar lama jika ada
-        if ($user->image && file_exists(storage_path('app/public/' . $user->image))) {
-            unlink(storage_path('app/public/' . $user->image));
-        }
+    //     $user = User::findOrFail($id);
+    //     $user->name = $request->name;
+    //     $user->email = $request->email;
 
-        // Simpan gambar baru
-        $imageName = time().'.'.$request->image->extension();
-        $request->image->move(storage_path('app/public/images/users'), $imageName);
-        $user->image = 'images/users/' . $imageName;
-    }
+    // if ($request->hasFile('image')) {
+    //     // Hapus gambar lama jika ada
+    //     if ($user->image && file_exists(storage_path('app/public/' . $user->image))) {
+    //         unlink(storage_path('app/public/' . $user->image));
+    //     }
 
-    $user->save();
+    //     // Simpan gambar baru
+    //     $imageName = time().'.'.$request->image->extension();
+    //     $request->image->move(storage_path('app/public/images/users'), $imageName);
+    //     $user->image = 'images/users/' . $imageName;
+    // }
+
+    // $user->save();
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,

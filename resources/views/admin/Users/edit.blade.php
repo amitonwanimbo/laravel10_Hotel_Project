@@ -26,9 +26,7 @@
             box-sizing: border-box;
             transition: border-color 0.3s;
         }
-  
 
-   
 </style>
 <div class="container mt-3">
     @if(session('success'))
